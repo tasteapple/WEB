@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kim's SPA</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <style>
+        /*바뀌지 않는 메뉴바 css*/
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #panel,
+        .flip {
+            border: 1px solid black;
+            border-radius: 7px;
+        }
+
+        .flip {
+            background-image: url(./pics/tree-g5c08c5a1b_1280.jpg);
+            background-size: cover;
+            text-align: center;
+            font-size: larger;
+        }
+
+        #panel {
+            display: none;
+            padding: 25px;
+            text-align: center;
+            background-image: url(./pics/hd-wallpaper-gd40fa949a_1280.jpg);
+            background-size: cover;
+        }
+
+        .menu_herf {
+            color: white;
+            text-decoration: none;
+            line-height: 30px;
+            font-size: larger;
+        }
+
+        .display {
+            display: none;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+
+            //메뉴바 클릭시 메뉴 보여주기
+            $('.flip').click(function () {
+                $('#panel').slideToggle(1000);
+            });
+
+            //메뉴 클릭시 한가지 메뉴만 보이게 하는 jquery
+            $('[href="#home"]').click(function () {
+                $('#home').removeClass('display');
+                $('#about').addClass('display');
+                $('#contact').addClass('display');
+                $('#guest_book').addClass('display');
+            });
+
+            $('[href="#about"]').click(function () {
+                $('#about').removeClass('display');
+                $('#home').addClass('display');
+                $('#contact').addClass('display');
+                $('#guest_book').addClass('display');
+            });
+
+            $('[href="#contact"]').click(function () {
+                $('#contact').removeClass('display');
+                $('#home').addClass('display');
+                $('#about').addClass('display');
+                $('#guest_book').addClass('display');
+            });
+
+            $('[href="#guest_book"]').click(function () {
+                $('#guest_book').removeClass('display');
+                $('#home').addClass('display');
+                $('#about').addClass('display');
+                $('#contact').addClass('display');
+            });
+
+            //home 페이지
+            $('#home').css({ 'text-align': 'center' });
+            $('#main_photo').css({ width: '45%' });
+
+
+            //about 페이지
+            $('#about').css({ 'text-align': 'center' });
+
+            //contact 페이지
+            $('#contact').css({ 'text-align': 'center' });
+            $('#contact > h1').css({ color: 'aqua' });
+            $('#contact li').css({ color: 'orange' });
+            //군생활 사진 1초마다 바꾸기
+            var i = 1;
+            setInterval(function () {
+                $('#military_img').css({ width: '45%' });
+                $('#military_img').attr('src', './pics/me/me' + i + '.jpg');
+                i += 1;
+                i %= 7;
+            }, 1500);
+
+            //guest_book 페이지
+            $('#guest_book').css({ 'text-align': 'center' });
+            $('table').css({ 'text-align': 'center' });
+            var button = document.getElementById('button');
+            button.onclick = function() {
+                var userName = document.getElementById("username").value;
+                var userContent = document.getElementById("content").value;
+                var tbody = document.querySelector('tbody');
+                var userDate = new Date();
+
+                var year = userDate.getFullYear();
+                var month = userDate.getMonth() + 1;
+                var date = userDate.getDate();
+                var hours = String(userDate.getHours()).padStart(2, "0");
+                var minutes = String(userDate.getMinutes()).padStart(2, "0");
+
+                var newtr = document.createElement("tr");
+                var td1 = document.createElement("td");
+                var td2 = document.createElement("td");
+                var td3 = document.createElement("td");
+                var td4 = document.createElement("td");
+
+                td1.innerText = tbody.rows.length + 1;
+                td2.innerText = userName;
+                td3.innerText = userContent;
+                td4.innerText = `${year}-${month}-${date} ${hours}:${minutes}`;
+
+                newtr.append(td1);
+                newtr.append(td2);
+                newtr.append(td3);
+                newtr.append(td4);
+                tbody.appendChild(newtr);
+            };
+            
+        });
+    </script>
+
+
+</head>
+
+<body>
+    <div class="flip">Click to menu</div>
+
+    <div id="panel">
+        <a href="#home" class="menu_herf">Home</a> <br>
+        <a href="#about" class="menu_herf">About Me</a> <br>
+        <a href="#contact" class="menu_herf">Contact</a> <br>
+        <a href="#guest_book" class="menu_herf">Guest_book</a>
+    </div>
+
+    <div id="home">
+        <img id="main_photo" src="./pics/me_main.jpg" alt="It's my main photo">
+        <h1 style="font-style: italic;">Welcome To My First SPA!!</h1>
+        <p>
+            My name is Kim Gyeong Hoe <br>
+            I am student at the Department of <strong><i>Computer engineering</i></strong> at at Kangwon university <br>
+            I lived in Hongcheon-eup, Hongcheon-gun, Gangwon-do, Republic of Korea <br>
+            If you want to contact me check the contact menu
+        </p>
+    </div>
+
+    <div id="about" class="display">
+        <p>
+            I was born at 2001-01-02 in Hongcheon <br>
+            when I was 8-years I have entered elementary school <br>
+            I was 14-years I have entered middle school <br>
+            I was 17-years I have entered high school <br>
+            Now I am Kangwon university student!!
+        </p>
+        <hr>
+        <img id="military_img" alt="It's my military photo">
+        <p>
+            I did milirary service as a cook in incheon for 17-months. <br>
+            This pictures is me and my milirary friends
+        </p>
+    </div>
+
+    <div id="contact" class="display">
+        <h1>Email</h1>
+        <ul>
+            <h3>
+                <li>Google: <a href="mailto:rudghl0102@gmai.com">rudghl0102@gmail.com</a></li>
+            </h3>
+            <h3>
+                <li>Naver: <a href="mailto:">rudghlwwwww@naver.com</a></li>
+            </h3>
+        </ul>
+        <h1>HandPhome</h1>
+        <h3>010-9418-8631</h3>
+        <h1>kakao Id</h1>
+        <h3>rudghl0102</h3>
+    </div>
+
+    <div id="guest_book" class="display">
+        <p>출처: <a
+                href="https://velog.io/@jsomedev/Javascript-%EA%B3%84%EC%82%B0%EA%B8%B0-%EB%B0%A9%EB%AA%85%EB%A1%9D-%EC%A3%BC%EB%AC%B8-%EC%82%AC%EC%9D%B4%ED%8A%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0">이
+                사이트보고 만듬</a></p>
+        <p>방명록을 작성해 주세요</p>
+        <div>
+            <label for="username"><strong>작성자:</strong></label>
+            <input type="text" id="username">
+        </div>
+
+        <div>
+            <label for="content"><strong>내용: </strong></label>
+            <input type="text" id="content" size="100">
+        </div>
+
+        <br>
+        <button type="button" id="button" style="margin-bottom: 20px;">작성</button>
+
+        <table border="1" cellspacing="1" cellpadding="20">
+            <thead>
+                <tr>
+                    <td>번호</td>
+                    <td>작성자</td>
+                    <td>내용</td>
+                    <td>작성일</td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</body>
+
+</html>
